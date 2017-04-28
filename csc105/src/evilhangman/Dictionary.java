@@ -5,14 +5,14 @@
  */
 package evilhangman;
 
-import java.util.HashMap;
-
+//import java.util.HashSet;
+import java.util.*;
 /**
  *
  * @author redninjasir
  */
 public class Dictionary {
-    HashMap map;
+    HashMap map = new HashMap();
     String Familykey;
     public void Dictionary(String file){
     
@@ -20,5 +20,19 @@ public class Dictionary {
    public String format(String word, char ch, String CurrendFk){
        return "asdf";
    }
+   public  HashSet<String> game(HashSet<String> remaingingWords, char ch, String currentFamilyK){
+        return null;
    
+   }
+   public HashSet getSet(int wordLength){
+       return null;
+       
+   }
+   public boolean validWordLength(){
+       return false;
+   }
+    public String getFamilykey() {
+        return Familykey;
+    }
+
 }

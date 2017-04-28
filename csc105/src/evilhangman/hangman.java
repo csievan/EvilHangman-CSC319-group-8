@@ -5,6 +5,8 @@
  */
 package evilhangman;
 
+import java.util.Arrays;
+
 /**
  *
  * @author redninjasir
@@ -14,13 +16,15 @@ public class hangman {
     Dictionary Dic;
     String showWords;
     int wordlength;
-    String[] guesssLetters;
+    char[] guessLetters;
     String dashLine;
     int guessCount;
     boolean gameResult;
     String ChosenWord;
-
-    public void hangman() {
+    public hangman() {
+        this.guessLetters = new char[5];
+        this.dashLine = "_";
+        this.guessCount = 0;
     }
 
     public void setWordlength(int wordlength) {
@@ -43,32 +47,25 @@ public class hangman {
         return ChosenWord;
     }
 
-    public String[] setGuessLetter(String ch) {//ch : char
-        String[] a = {" "};
-        String[] b = {"Error"};
-        if (ch.length() < 1) {
-            if (ch.equals(" ") == false) {
-                guesssLetters[guessCount] = ch;
-                guessCount++;
-                return a;
-            } else {
-                return b;
-            }
-        } else {
-            return b;
-        }
+    public char[] inputGuessLetter(char ch) {//ch : char
+        return guessesLetters(ch);
     }
 
     public boolean isGuessletterRepeated() {
         boolean check = false;
-        for(int i = 0;i<guesssLetters.length;i++){
-            if(guesssLetters[i].equals(guesssLetters[guessCount]))
+        String re = ""+guessLetters[guessCount]; 
+        for (int i = 0; i < guessLetters.length; i++) {
+            String ch = ""+guessLetters[i];
+            if(ch.equalsIgnoreCase(dashLine)) {
                 check = false;
-            else
+                guessCount--;
+            } else {
                 check = true;
+            }
         }
         return check;
     }
+
     public boolean isLetterRightGuess() {
         return true;
     }
@@ -95,21 +92,32 @@ public class hangman {
     }
 
     public String displayDashLine() {
-        return dashLine;
-    }
-
-    public String[] guessesLetters(String ch) { //ch : char
-        return guesssLetters;
-    }
-
-    public void displayGuessesLetters(String letter) {
-        for (int i = 0; i < guesssLetters.length; i++) {
-            letter = guesssLetters[i] + "";
+        for(int j = 0;j<wordlength;j++){
+           System.out.print(dashLine+" ");
         }
-        System.out.println(letter);
+        System.out.println();
+        return "";
+    }
+
+    public char[] guessesLetters(char ch) { //ch : char
+        return guessLetters;
+    }
+
+    public String displayGuessesLetters() {
+        //String a = guessLetters+"";
+        //System.out.print(new String(guessLetters)+" ");
+        for(int i =0;i<guessCount;i++){
+            System.out.print(guessLetters[i]);
+            System.out.print(" ");
+        }
+        return " ";
     }
 
     public int Remainningwords() {
         return wordlength;
+    }
+
+    public void setGuessLetter(char letter) {
+         this.guessLetters[guessCount++] = letter;
     }
 }
