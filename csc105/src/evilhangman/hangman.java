@@ -5,6 +5,8 @@
  */
 package evilhangman;
 
+import java.util.Scanner;
+
 /**
  *
  * @author redninjasir
@@ -14,13 +16,21 @@ public class hangman {
     Dictionary Dic;
     String showWords;
     int wordlength;
-    String[] guesssLetters;
+    char[] guessLetters;
     String dashLine;
     int guessCount;
     boolean gameResult;
     String ChosenWord;
+    Scanner sc = new Scanner(System.in);
 
-    public void hangman() {
+    public hangman() {
+        this.guessLetters = new char[wordlength];
+        this.dashLine = "_";
+        this.guessCount = 0;
+        this.Dic = new Dictionary("dictionary.txt");
+        Dic.ReadWord();
+        this.wordlength = Dic.word.length();
+        this.showWords = Dic.getWord();
     }
 
     public void setWordlength(int wordlength) {
@@ -40,35 +50,29 @@ public class hangman {
     }
 
     public String getChosenWord() {
-        return ChosenWord;
+        return showWords;
     }
 
-    public String[] setGuessLetter(String ch) {//ch : char
-        String[] a = {" "};
-        String[] b = {"Error"};
-        if (ch.length() < 1) {
-            if (ch.equals(" ") == false) {
-                guesssLetters[guessCount] = ch;
-                guessCount++;
-                return a;
-            } else {
-                return b;
-            }
+    public void inputGuessLetter(char ch) {//char[]
+        if (!new String(guessLetters).contains(String.valueOf(ch))) {
+            this.guessLetters[guessCount] = ch;
+            guessCount++;
         } else {
-            return b;
+            System.out.println("Error pls enter again");
+            inputGuessLetter(sc.next().charAt(0));
+            this.guessLetters[guessCount] = ch;
+            guessCount--;
+            guessCount++;
         }
     }
 
-    public boolean isGuessletterRepeated() {
+    public boolean isGuessletterRepeated(char guess) {
         boolean check = false;
-        for(int i = 0;i<guesssLetters.length;i++){
-            if(guesssLetters[i].equals(guesssLetters[guessCount]))
-                check = false;
-            else
-                check = true;
-        }
+        inputGuessLetter(sc.next().charAt(0));
+        guessCount++;
         return check;
     }
+
     public boolean isLetterRightGuess() {
         return true;
     }
@@ -78,35 +82,39 @@ public class hangman {
     }
 
     public Dictionary WordListEliminating(Dictionary Dic) {//Dic : Dictionary
+        
         return Dic;
     }
 
-    public int setGuessCount() {
-
-        return guessCount;
+    public void setGuessCount() {
+        this.guessCount = 7;
     }
 
     public boolean setGameResult() {
         return gameResult;
     }
 
-    public String setChosenWord() {
-        return ChosenWord;
+    public void setChosenWord() {
+        this.showWords = Dic.getWord();
     }
 
     public String displayDashLine() {
-        return dashLine;
-    }
-
-    public String[] guessesLetters(String ch) { //ch : char
-        return guesssLetters;
-    }
-
-    public void displayGuessesLetters(String letter) {
-        for (int i = 0; i < guesssLetters.length; i++) {
-            letter = guesssLetters[i] + "";
+        for (int j = 0; j < wordlength; j++) {
+            System.out.print(dashLine + " ");
         }
-        System.out.println(letter);
+        System.out.println();
+        return "";
+    }
+
+    public char[] guessesLetters(char ch) { //ch : char
+        return guessLetters;
+    }
+
+    public String displayGuessesLetters() {
+        for (int i = 0; i < guessCount; i++) {
+            System.out.print(guessLetters[i] + " ");
+        }
+        return " ";
     }
 
     public int Remainningwords() {
